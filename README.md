@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
 });
 ```
 
-2. Make an async wrapper for `redux-struct` actions. Implementation depends on tool that you chosen for mantaining side effects in Redux. Here is example for `redux-saga`:
+2. Make an async wrapper for `redux-struct` actions. Implementation depends from tool you choose to maintain side effects in Redux. Here is example for `redux-saga`:
 ```js
 import { put, call } from 'redux-saga/effects';
 import { startStructFetch, stopStructFetch } from 'redux-struct';
@@ -52,12 +52,12 @@ function* fetchUser(id) {
 
 4. Get current state of struct from Redux store for usage in React component:
 ```js
-import { getStruct } from 'utils/sagas';
+import { getStruct } from 'redux-scruct';
 
 const mapStateToProps = (state, props) => {
   const { userId } = props;
   return {
-    user: getStruct(userId, state),
+    user: getStruct(userId)(state),
   };
 }
 ```
@@ -91,4 +91,4 @@ Action creator, sets structs `isFetching` to `false`. If payload is instance of 
 Action creator, merges struct with payload.
 
 ### `resetStruct(structId:String)`
-Action creator, resets struct to it's default state.
+Action creator, resets struct to its default state.
