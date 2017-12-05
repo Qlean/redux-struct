@@ -52,7 +52,7 @@ function* fetchUser(id) {
 
 4. Get current state of struct from Redux store for usage in React component:
 ```js
-import { getStruct } from 'redux-scruct';
+import { getStruct } from 'redux-struct';
 
 const mapStateToProps = (state, props) => {
   const { userId } = props;
