@@ -1,6 +1,6 @@
 {
   "name": "redux-struct",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Set of tools providing a solid structure to keep and update entities in Redux store",
   "author": "Alexander Tewpin <alex.tewpin@gmail.com> (https://github.com/alextewpin)",
   "repository": {
