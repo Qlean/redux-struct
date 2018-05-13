@@ -1,6 +1,21 @@
 # redux-struct
 
-`redux-struct` is a set of tools providing a solid structure to keep and update entities in Redux store.
+`redux-struct` is a toolset to keep and update async data state in Redux store when working with REST APIs. It also drastically reduces boilerplate actions and reducers when working with such APIs.
+
+One struct is a piece of store incapsulating fetching state, data and error from one endpoint. They are referred by string ids — for example, order with id `15` can be kept under struct id `order/15`. Structs are initiated automatically when the first action with given id is dispatched.
+
+All structs have the same initial structure:
+```js
+{
+  isFetching: false,
+  data: null,
+  error: null,
+}
+```
+
+`redux-struct` provides set of action creators to start fetching data on struct with given id, stop it with result or error, update or reset it. There is also a selector to get struct by its id.
+
+There is no built-in async middleware, `redux-struct` is just a data level abstraction to keep all async stuff organized.
 
 ## Installation
 ```
@@ -8,7 +23,7 @@ $ npm i redux-struct
 ```
 
 ## Usage
-1. Add `redux-struct` reducer to your root reducer:
+Add `redux-struct` reducer to your root reducer:
 ```js
 import { combineReducers } from 'redux';
 import { reducer as struct } from 'redux-struct';
@@ -19,7 +34,7 @@ const rootReducer = combineReducers({
 });
 ```
 
-2. Make an async wrapper for `redux-struct` actions. Implementation depends from tool you choose to maintain side effects in Redux. Here is example for `redux-saga`:
+Make an async wrapper for `redux-struct` actions. Implementation depends from tool you choose to maintain side effects in Redux. Here is example for `redux-saga`:
 ```js
 import { put, call } from 'redux-saga/effects';
 import { startStructFetch, stopStructFetch } from 'redux-struct';
@@ -39,7 +54,7 @@ export function* fetchStruct(structId, url) {
 };
 ```
 
-3. Call this async wrapper in other sagas or async action creators:
+Call this async wrapper in other sagas or async action creators:
 ```js
 import { call } from 'redux-saga/effects';
 
@@ -50,7 +65,7 @@ function* fetchUser(id) {
 };
 ```
 
-4. Get current state of struct from Redux store for usage in React component:
+Get current state of struct from Redux store for usage in React component:
 ```js
 import { getStruct } from 'redux-struct';
 
@@ -59,17 +74,6 @@ const mapStateToProps = (state, props) => {
   return {
     user: getStruct(userId)(state),
   };
-}
-```
-
-## Struct
-
-Struct is a piece of data that can represent any entity or collection of entities: user, array of orders, etc. Struct are initiated automatically when first action with given structId is dispatched. All structs has same initial structure:
-```js
-{
-  isFetching: false,
-  data: null,
-  error: null,
 }
 ```
 
